@@ -17,7 +17,7 @@ app.get("/weather", async (req, res) => {
     try {
         const { lat, lon } = req.query;
         if (lat === undefined || lon === undefined) {
-            // If latitude or longitude is not provided, send an error response
+            // If latitude or longitude is not provided, send an Back to index
             return res.redirect("/");
         }
 
@@ -38,15 +38,8 @@ app.get("/weather", async (req, res) => {
     }
 });
 
-app.post("/weather-user-location", (req, res) => {
-    const lat = req.body.lat;
-    const lon = req.body.lon;
-    
-    console.log("User Location: " + lat + "/" + lon);
-    res.redirect(`/weather?lat=${lat}&lon=${lon}`);
-});
 
-app.post("/weather-typed-location", async (req, res) => {
+app.post("/weather", async (req, res) => {
     const location = req.body.input;
     console.log("Input Field: " + location);
     
