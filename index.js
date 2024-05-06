@@ -8,7 +8,7 @@ const port = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const ApiKey = "877d8f5c9a2b5e3b8d609a3ff3b6f42f"; // do env
+const ApiKey = process.env.API_KEY; 
 
 app.use(express.static("public"));
 
