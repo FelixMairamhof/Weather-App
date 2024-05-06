@@ -9,5 +9,10 @@
     <h1>Weather in <%= city %> , <%= country %></h1>
     <h2>Temperatur: <%= temp %></h1>
     <h2>Weather: <%= weather %></h1>
+
+    <form action="/weather" method="POST">
+        <input type="text" name="input" placeholder="Location">
+        <input type="submit">
+    </form>
 </body>
 </html>
