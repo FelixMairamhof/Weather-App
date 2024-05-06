@@ -8,7 +8,7 @@ const port = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const ApiKey = process.env.API_KEY; 
+const ApiKey = "877d8f5c9a2b5e3b8d609a3ff3b6f42f"; 
 
 app.use(express.static("public"));
 
@@ -19,9 +19,13 @@ app.get("/weather", async (req, res) => {
             res.redirect("/");
         }
         const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${ApiKey}&units=metric`);
+        console.log(result.data);
+        
         res.render("weather.ejs", {
             temp: result.data.main.temp,
             weather: result.data.weather[0].main,
+            city: result.data.name,
+            country: result.data.sys.country,
         });
     } catch (error) {
         res.send(error.message);
