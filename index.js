@@ -1,47 +1,62 @@
 import express from "express";
 import axios from "axios";
+import bodyParser from "body-parser";
 
 const app = express();
 const port = 3000;
 
-const ApiKey = "877d8f5c9a2b5e3b8d609a3ff3b6f42f";
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-const latKl = 46.639468;
-const lonKl = 14.305363;
-
-const latZü = 47.365933;
-const lonZü = 8.534504;
-
-const latZa = 45.479662;
-const lonZa = 13.506812;
-
+const ApiKey = "877d8f5c9a2b5e3b8d609a3ff3b6f42f"; // do env
 
 app.use(express.static("public"));
 
-app.get("/",async(req,res)=>{
-    try{
-        const resultKl = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latKl}&lon=${lonKl}&appid=${ApiKey}&units=metric`);
-        const resultZü = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latZü}&lon=${lonZü}&appid=${ApiKey}&units=metric`);
-        const resultZa = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latZa}&lon=${lonZa}&appid=${ApiKey}&units=metric`);
-
-    
-        res.render("index.ejs",{
-            tempKl: resultKl.data.main.temp,
-            weatherKl: resultKl.data.weather[0].main,
-
-            tempZü: resultZü.data.main.temp,
-            weatherZü: resultZü.data.weather[0].main,
-
-            tempZa: resultZa.data.main.temp,
-            weatherZa: resultZa.data.weather[0].main,
-        })
+app.get("/weather", async (req, res) => {
+    try {
+        const { lat, lon } = req.query;
+        if(req.query == null){
+            res.redirect("/");
+        }
+        const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${ApiKey}&units=metric`);
+        res.render("weather.ejs", {
+            temp: result.data.main.temp,
+            weather: result.data.weather[0].main,
+        });
     } catch (error) {
-        
         res.send(error.message);
     }
+});
 
-})
+app.post("/weather-user-location", (req, res) => {
+    const lat = req.body.lat;
+    const lon = req.body.lon;
+    
+    console.log("User Location: " + lat + "/" + lon);
+    res.redirect(`/weather?lat=${lat}&lon=${lon}`);
+});
+app.post("/weather-typed-location", async(req, res) => {
+    const location = req.body.input;
+    console.log("Input Field: " + location);
+    
+    try{
+        const result = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=${ApiKey}`);
+        console.log(result);
+        const lat = result.data[0].lat;
+        const lon = result.data[0].lon;
 
-app.listen(port, ()=>{
+        res.redirect(`/weather?lat=${lat}&lon=${lon}`);
+    }catch{
+        res.redirect("/");
+    }
+
+    
+});
+
+app.get("/", (req, res) => {
+    res.render("index.ejs");
+});
+
+app.listen(port, () => {
     console.log("Server running on " + port);
-})
+});

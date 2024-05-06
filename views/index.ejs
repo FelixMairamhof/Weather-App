@@ -7,8 +7,56 @@
     <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
-    <div class="container">
-    
-    </div>  
+    <form action="/weather-typed-location" method="POST">
+        <input name="input" type="text" placeholder="Location">
+        <input id="lat" name="lat" value="" hidden>
+        <input id="lon" name="lon" value="" hidden>
+        
+
+        <input type="submit">
+    </form>
+    <form action="/weather-user-location" method="POST">
+        <input id="lat" name="lat" value="" hidden>
+        <input id="lon" name="lon" value="" hidden>
+        <p id="location"></p>
+
+        <input type="submit">
+    </form>
+    <button onclick="getUserLocation()">Get My Location</button>
+
+    <script>
+        function getUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            document.getElementById("lat").value = latitude;
+            document.getElementById("lon").value = longitude;
+            document.getElementById("location").innerText = "Latitude: " + latitude + ", Longitude: " + longitude;
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+    </script>
 </body>
 </html>
