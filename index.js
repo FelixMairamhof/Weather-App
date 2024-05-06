@@ -2,6 +2,7 @@ import express from "express";
 import axios from "axios";
 import bodyParser from "body-parser";
 
+
 const app = express();
 const port = 3000;
 
@@ -15,9 +16,12 @@ app.use(express.static("public"));
 app.get("/weather", async (req, res) => {
     try {
         const { lat, lon } = req.query;
-        if(req.query == null){
-            res.redirect("/");
+        if (lat === undefined || lon === undefined) {
+            // If latitude or longitude is not provided, send an error response
+            return res.redirect("/");
         }
+
+        // Retrieve weather information based on latitude and longitude
         const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${ApiKey}&units=metric`);
         console.log(result.data);
         
@@ -28,7 +32,9 @@ app.get("/weather", async (req, res) => {
             country: result.data.sys.country,
         });
     } catch (error) {
-        res.send(error.message);
+        // Handle errors
+        res.status(500).send(error.message);
+        console.log(error);
     }
 });
 
@@ -39,22 +45,23 @@ app.post("/weather-user-location", (req, res) => {
     console.log("User Location: " + lat + "/" + lon);
     res.redirect(`/weather?lat=${lat}&lon=${lon}`);
 });
-app.post("/weather-typed-location", async(req, res) => {
+
+app.post("/weather-typed-location", async (req, res) => {
     const location = req.body.input;
     console.log("Input Field: " + location);
     
-    try{
+    try {
         const result = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=${ApiKey}`);
         console.log(result);
         const lat = result.data[0].lat;
         const lon = result.data[0].lon;
 
         res.redirect(`/weather?lat=${lat}&lon=${lon}`);
-    }catch{
-        res.redirect("/");
+    } catch (error) {
+        // Handle errors
+        console.log(error);
+        res.status(500).send("Error retrieving weather information for the specified location.");
     }
-
-    
 });
 
 app.get("/", (req, res) => {
