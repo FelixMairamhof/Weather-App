@@ -56,6 +56,7 @@ app.post("/weather", async (req, res) => {
     const location = req.body.input;
     console.log("Input Field: " + location);
     
+
     try {
         const result = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=${ApiKey}`);
         console.log(result);
@@ -66,7 +67,7 @@ app.post("/weather", async (req, res) => {
     } catch (error) {
         // Handle errors
         console.log(error);
-        res.status(500).send("Error retrieving weather information for the specified location.");
+        res.redirect("/");
     }
 });
 
