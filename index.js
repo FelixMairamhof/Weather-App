@@ -28,12 +28,21 @@ app.get("/weather", async (req, res) => {
         temp = Math.round(result.data.main.temp);
         
         res.render("weather.ejs", {
+            //Top Weather
             temp: temp,
             weather: result.data.weather[0].main,
             description: result.data.weather[0].description,
             city: result.data.name,
             country: result.data.sys.country,
             icon: result.data.weather[0].icon,
+            //Left Weather
+            feel: result.data.main.feels_like,
+            tempMin: result.data.main.temp_min,
+            tempMax: result.data.main.temp_max,
+            //Right Weather
+            pressure: result.data.main.pressure,
+            humidity: result.data.main.humidity,
+            wind: result.data.wind.speed,
         });
     } catch (error) {
         // Handle errors

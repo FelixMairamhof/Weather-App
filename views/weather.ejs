@@ -6,9 +6,9 @@
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="m-5 h-screen w-screen bg-gradient-to-t from-cyan-200 to-blue-600 ">
+<body class="m-5 h-full w-full bg-gradient-to-t from-cyan-400 to-blue-800 ">
    <div class="flex justify-center text-center p-5">
-        <div class="w-1/2 bg-gradient-to-b from-blue-500 to-blue-800 p-5 rounded-3xl">
+        <div class="shadow-2xl w-5/6 bg-gradient-to-b from-blue-400 to-blue-600 p-5 rounded-3xl">
             <h1 class="text-3xl font-bold text-white"><%= city %> , <%= country %></h1>
 
             <div class="flex justify-center">
@@ -18,13 +18,44 @@
             <h2 class="font-bold text-5xl text-white"><%= temp %>°C</h2>
 
             <h2 class="text-xl font-bold text-white p-5"><%= description %></h2>
-           
+        </div>
+        
+   </div>
+   <div class="flex justify-center text-center my-5">
+        <div class="shadow-2xl mx-8 w-1/3  bg-gradient-to-l from-blue-400 to-blue-600 p-5 rounded-3xl">
 
-            <form action="/weather" method="POST">
-                <input type="text" name="input" placeholder="Location">
-                <input type="submit">
-            </form>
+            <h2 class="text-xl font-bold text-white p-5 border-b">FeelsLike: <br> <%= feel %> °C</h2>
+
+
+            <h2 class="text-xl font-bold text-white p-5 border-b">minTemperature: <br> <%= tempMin %> °C</h2>
+
+            <h2 class="text-xl font-bold text-white p-5">maxTemperature: <br> <%= tempMax %> °C</h2>
+
+        
+        </div>
+        <div class="shadow-2xl mx-8 w-1/3  bg-gradient-to-r from-blue-400 to-blue-600 p-5 rounded-3xl">
+
+            <h2 class="text-xl font-bold text-white p-5 border-b">Pressure: <br> <%= pressure %> bar</h2>
+
+
+            <h2 class="text-xl font-bold text-white p-5 border-b">Humidity: <br> <%= tempMin %> %</h2>
+
+            <h2 class="text-xl font-bold text-white p-5">Wind: <br> <%= wind %> km/h</h2>
+        
         </div>
    </div>
+
+   <div class="flex justify-center text-center p-5">
+    <div class="shadow-2xl w-5/6 bg-gradient-to-t from-blue-400 to-blue-600 p-5 rounded-3xl">
+        <h1 class="text-2xl font-bold text-white mb-4">Weather at other Location</h1>
+
+        <form action="/weather" method="POST">
+            <input class="rounded-3xl shadow-2xl p-1 px-2" type="text" name="input" placeholder="Location" required>
+            <button type="submit" class="hover:bg-blue-700 hover:scale-110   mx-4 bg-blue-600 rounded-3xl p-1 text-white px-2">Search</button>
+        </form>
+    </div>
+    
+</div>
+   
 </body>
 </html>
