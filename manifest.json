@@ -1,0 +1,10 @@
+{
+    "name": "Weather App",
+    "short_name": "Weather",
+    "theme_color": "#008eff",
+    "background_color": "#8bc6f4",
+    "display": "fullscreen",
+    "orientation": "portrait",
+    "scope": "/",
+    "start_url": "/"
+  }
