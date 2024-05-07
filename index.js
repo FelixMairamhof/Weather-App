@@ -24,12 +24,16 @@ app.get("/weather", async (req, res) => {
         // Retrieve weather information based on latitude and longitude
         const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${ApiKey}&units=metric`);
         console.log(result.data);
+        let temp = result.data.main.temp;
+        temp = Math.round(result.data.main.temp);
         
         res.render("weather.ejs", {
-            temp: result.data.main.temp,
+            temp: temp,
             weather: result.data.weather[0].main,
+            description: result.data.weather[0].description,
             city: result.data.name,
             country: result.data.sys.country,
+            icon: result.data.weather[0].icon,
         });
     } catch (error) {
         // Handle errors

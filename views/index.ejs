@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="stylesheet.css">
-    <style>
-        .hidden {
-            display: none;
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
 </head>
-<body>
+<body class="bg-gradient-to-r from-cyan-500 to-blue-500 ">
     <form action="/weather" method="POST" id="locationForm" class="hidden">
         <input name="input" type="text" placeholder="Location">
         <input type="submit">
