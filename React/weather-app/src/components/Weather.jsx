@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Weather(props) {
     return (
-        <div>
+        <div className="mt-20">
             <div className="flex justify-center text-center p-5">
                 <div className="shadow-2xl w-5/6 bg-gradient-to-b from-blue-400 to-blue-600 p-5 rounded-3xl">
                     <h1 className="text-3xl font-bold text-white">{props.city} {props.country}</h1>
