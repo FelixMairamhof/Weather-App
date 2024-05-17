@@ -1,9 +1,8 @@
 import React from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export default function Navbar(){
-    return(
-
+export default function Navbar({ positions }) {
+    return (
         <div>
             <nav className="flex justify-center">
                 <div className="absolute top-2">
@@ -13,12 +12,16 @@ export default function Navbar(){
                         </li> 
                         <li className="mr-3">
                             <Link to="/weather" className="inline-block border border-blue-500 rounded py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white">Weather</Link>
-                        </li>     
+                        </li>
+                        {/* Render links for each added location if positions array is defined */}
+                        {positions && positions.map((position, index) => (
+                            <li key={index} className="mr-3">
+                                <Link to={`/weather/${index}`} className="inline-block border border-blue-500 rounded py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white">Location {index}</Link>
+                            </li>
+                        ))}
                     </ul>
                 </div>
             </nav>
-            <Outlet/>
         </div>
-
     );
 }
