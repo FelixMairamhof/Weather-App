@@ -77,7 +77,7 @@ function LocationForm(props) {
     }
 
     return (
-        <div className="text-center">
+        <div className="text-center mt-10">
             <h1 className="mb-20 text-white font-bold text-2xl">Type in a Location or Localize your own </h1>
             <input onChange={handleChange} value={input} name="input" type="text" placeholder="Location" className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500" />
             <div className="flex justify-center my-5">
