@@ -19,7 +19,6 @@ function App() {
 
         <Routes>
             <Route path="/" element={<LocationForm onSubmit={onSubmit} />} />
-            <Route path="/weather" element={<Weather lat={positions[positions.length - 1]?.lat} lon={positions[positions.length - 1]?.lon} />} />
             {positions.map((position, index) => (
                 <Route key={index} path={`/weather/${index}`} element={<Weather lat={position.lat} lon={position.lon} />} />
             ))}
