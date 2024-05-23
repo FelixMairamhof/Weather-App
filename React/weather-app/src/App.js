@@ -9,9 +9,15 @@ function App() {
   const [positions, setPositions] = useState([]);
 
   function onSubmit(position) {
-    setPositions(prevPositions => [...prevPositions, position]);
-                            console.log(position);
-
+  
+    //Check if city exists
+      const cityExists = positions.some(pos => pos.city === position.city);
+      
+      if (!cityExists) {
+        setPositions(prevPositions => [...prevPositions, position]);
+      }
+    
+    
   }
 
   return (
