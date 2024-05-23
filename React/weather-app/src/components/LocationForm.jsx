@@ -1,20 +1,15 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState } from "react";
 
 function LocationForm(props) {
     const [error, setError] = useState("");
     const [input, setInput] = useState("");
-    const [cords, setCords] = useState({
-        lat: null,
-        lon: null
-    })
+
 
     const ApiKey = "877d8f5c9a2b5e3b8d609a3ff3b6f42f";
 
     function handleChange(event) {
         setInput(event.target.value);
     }
-
 
     async function getLocation() {
         try {
@@ -28,15 +23,23 @@ function LocationForm(props) {
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
 
-
-                    if(!(cords.lat === null && cords.lon === null)){
-                        props.onSubmit(cords);
-                        setError("");
-                        setCords({ lat, lon });
-    
+                    // Fetch reverse geocoding data
+                    const result = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${ApiKey}`);
+                    if (!result.ok) {
+                        throw new Error("Error fetching location data");
                     }
-                    
-                    
+                    const data = await result.json();
+
+                    if (!data || data.length === 0) {
+                        throw new Error("Location not found");
+                    }
+
+                    const city = data[0].name;
+
+                    setError("");
+
+                    // Call onSubmit with the coordinates, country, and city
+                    props.onSubmit({ lat, lon, city });
                 },
                 (error) => {
                     // Handle permission denied or other geolocation errors
@@ -44,12 +47,9 @@ function LocationForm(props) {
                 }
             );
         } catch (error) {
-            setError( error.message);
+            setError(error.message);
         }
     }
-    
-    
-    
 
     async function typedLocation() {
         try {
@@ -65,12 +65,12 @@ function LocationForm(props) {
 
             const lat = dataCords[0].lat;
             const lon = dataCords[0].lon;
+            const city = dataCords[0].name;
 
             setError("");
-            setCords({ lat, lon });
 
-            // Call onSubmit with the coordinates
-            props.onSubmit({ lat, lon });
+            // Call onSubmit with the coordinates, country, and city
+            props.onSubmit({ lat, lon, city });
         } catch (error) {
             setError(error.message);
         }

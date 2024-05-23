@@ -10,6 +10,8 @@ function App() {
 
   function onSubmit(position) {
     setPositions(prevPositions => [...prevPositions, position]);
+                            console.log(position);
+
   }
 
   return (
@@ -19,8 +21,8 @@ function App() {
 
         <Routes>
             <Route path="/" element={<LocationForm onSubmit={onSubmit} />} />
-            {positions.map((position, index) => (
-                <Route key={index} path={`/weather/${index}`} element={<Weather lat={position.lat} lon={position.lon} />} />
+            {positions.map((position, index) =>  (
+                <Route key={index} path={`/weather/${position.city}`} element={<Weather lat={position.lat} lon={position.lon} />} />
             ))}
             {/* Define additional routes as needed */}
         </Routes>
