@@ -1,4 +1,4 @@
-# Weather App
+# Weather App Node
 [Link to WebApp](https://weather-app-xxhf.onrender.com)
 
 This repository contains a Weather App built with Node.js, Express, EJS, and utilizing the OpenWeatherAPI. The application provides weather information using three different OpenWeatherAPIs.
