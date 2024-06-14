@@ -24,7 +24,7 @@ function LocationForm(props) {
                     const lon = position.coords.longitude;
 
                     // Fetch reverse geocoding data
-                    const result = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${ApiKey}`);
+                    const result = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${ApiKey}`);
                     if (!result.ok) {
                         throw new Error("Error fetching location data");
                     }
@@ -53,14 +53,14 @@ function LocationForm(props) {
 
     async function typedLocation() {
         try {
-            const resultCords = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${input}&appid=${ApiKey}`);
+            const resultCords = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${input}&appid=${ApiKey}`);
             if (!resultCords.ok) {
-                throw new Error("Error fetching location data");
+                setError("Error fetching location data");
             }
             const dataCords = await resultCords.json();
 
             if (!dataCords || dataCords.length === 0) {
-                throw new Error("Location not found");
+                setError("Location not found");
             }
 
             const lat = dataCords[0].lat;
