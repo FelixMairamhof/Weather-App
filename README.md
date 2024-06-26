@@ -2,6 +2,8 @@
 
 This repository contains two Weather Apps: one built with Create React App and another built with Node.js, Express, and EJS. Both applications utilize the OpenWeatherAPI to provide weather information using three different OpenWeatherAPIs.
 
+![image](https://github.com/FelixMairamhof/Weather-App/assets/153379088/024b1adc-b3a7-472b-9bfd-d4908a6e9368)
+
 ## Web Applications
 
 - [React Weather App](https://weather-app-react-fvug.onrender.com/)
